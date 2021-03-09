@@ -1,24 +1,68 @@
-import logo from './logo.svg';
+import React from 'react';
 import './App.css';
+import Cards from './components/cards/Cards';
+import Cart from './components/cart/Cart';
+import Header from './components/header/Header';
+import { ThemeProvider } from 'styled-components';
+import GlobalStyle from './styles/global';
+
+
+import {GlobalContext} from './GlobalContext';
+import Modal from './components/modal/Modal';
+import InitialModalBody from './components/modal/InitialModalBody';
+import ProductModal from './components/modal/ProductModal';
+import styled from 'styled-components';
+import { mediaQueries } from './utils/mediaQueries';
+
+
+const ContentWrapper = styled.div`
+    margin: 0 auto;
+    display: flex;
+    max-width: 1200px;
+
+    ${mediaQueries("desktop")`
+      width: 90vw;
+    `};
+
+    ${mediaQueries("tablet")`
+      flex-direction: column-reverse;
+      width: 80vw;
+    `};
+`;
+
+const Main = styled.section`
+  ${mediaQueries('tablet')`
+    margin-top: 2em;
+  `};
+
+`;
+
 
 function App() {
+ 
+  const { theme, initialModalIsOpen, productModalIsOpen, ThemesBtnClicked } = React.useContext(GlobalContext);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+      <ThemeProvider theme={theme}>
+        <div className="App">
+          <GlobalStyle />
+          <Header />
+          <ContentWrapper >
+            <Main>
+              <Cards />
+            </Main>
+            <Cart  />
+          </ContentWrapper> 
+        </div>
+
+        
+        <Modal open={initialModalIsOpen} ThemesBtnClicked={ThemesBtnClicked}>
+          <InitialModalBody />
+        </Modal>
+        <Modal open={productModalIsOpen} style={{backgroundColor: "#31312eeb"}}>
+          <ProductModal />
+        </Modal>
+      </ThemeProvider>
   );
 }
 
