@@ -41,7 +41,7 @@ export default createGlobalStyle`
     }
 
     .activeCart {
-        height: 499px;
+        height: 485px;
     }
 
     .mobileCart {

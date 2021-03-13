@@ -53,6 +53,7 @@ const HeaderTopWrapper = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: flex-end;
+    height: 50px;
 `;
 
 const ThemesBtn = styled.button`
@@ -122,7 +123,7 @@ const Header = () => {
         <HeaderWrapper>
             
             <HeaderTopWrapper>
-                {isMobile() && <HiShoppingCart color='#9e9e9e' size='2em'
+                {isMobile() && <HiShoppingCart color='#9e9e9e' size='2.5em'
                     onClick={() => {
                         setMobileCartIsOpen(true)
                         console.log('cliquei')

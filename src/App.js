@@ -31,9 +31,12 @@ const ContentWrapper = styled.div`
 `;
 
 const Main = styled.section`
+  width: 70%;
+
   ${mediaQueries('tablet')`
     margin-top: 2em;
     display: none;
+    width: 100%;
   `};
 
 `;

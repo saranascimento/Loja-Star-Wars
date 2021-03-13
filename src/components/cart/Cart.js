@@ -6,10 +6,9 @@ import {mediaQueries} from '../../utils/mediaQueries';
 import {FaArrowLeft} from 'react-icons/fa'
 
 const CartWrapper = styled.section`
-    height: 499px;
+    height: 485px;
     background: ${({theme}) => theme.colors.secondary};
     width: 30%;
-    margin-left: auto;
     margin-right: 20px;
     position: relative;
     border-radius: 8px;
@@ -118,7 +117,7 @@ const CartBottom = styled.div`
     right: 0;
     box-shadow: 0px 1px 7px 0px black;
     justify-content: space-between;
-    height: 75px;
+    height: 62px;
     background: ${({theme}) => theme.colors.primary};
     display: flex;
     color: white;
@@ -129,6 +128,7 @@ const CartBottom = styled.div`
 
     p {
         font-weight: 700;
+        font-size: 12px;
     }
 `;
 

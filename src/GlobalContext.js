@@ -17,6 +17,8 @@ export const GlobalStorage = ({children}) => {
     // actions
     //Card
     const [starShipClicked, setStarShipClicked ] = React.useState(null);
+    const [filterStarShip, setFilterStarShip] = React.useState('');
+
     //Cart
     const [starShipsInCart, setStarShipsInCart ] = React.useState([]);
     const [mobileCartIsOpen, setMobileCartIsOpen ] = React.useState(false);
@@ -43,28 +45,35 @@ export const GlobalStorage = ({children}) => {
 
     const isMobile = () => {
       return window.matchMedia('(max-width: 768px)').matches;
-  }
+    }
    
     function isIncludedInCart(starShipClicked) {
       return !!starShipsInCart.find((starShip) => starShip.name === starShipClicked.name);
     }
+
+    const filterUpdate = (value) => {
+      setFilterStarShip(value);
+    };
+
 
     return (
         <GlobalContext.Provider 
             value={{
                 isMobile,
                 starShips,
+                filterUpdate,
                 theme, setTheme,
+                isIncludedInCart,
                 totalPrice, setTotalPrice,
                 totalQuantity, setTotalQuantity,
-                mobileCartIsOpen, setMobileCartIsOpen,
+                filterStarShip, setFilterStarShip,
                 starShipClicked, setStarShipClicked,
                 starShipsInCart, setStarShipsInCart,
+                mobileCartIsOpen, setMobileCartIsOpen,
                 ThemesBtnClicked, setThemesBtnClicked,
                 initialModalIsOpen, setInitialModalIsOpen,
                 productModalIsOpen, setProductModalIsOpen,
                 thankfulModalIsOpen, setThankfulModalIsOpen,
-                isIncludedInCart
             }}
         
         >

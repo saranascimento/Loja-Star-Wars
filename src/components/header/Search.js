@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { GlobalContext } from '../../GlobalContext';
 
 const FindStarship = styled.input`
     width: 80%;
@@ -10,8 +11,17 @@ const FindStarship = styled.input`
 `;
 
 const Search = () => {
+    const {filterUpdate} = React.useContext(GlobalContext);
+
     return (
-        <FindStarship type='text' placeholder='Buscar Nave...'/>
+        <FindStarship 
+            type='text' 
+            placeholder='Buscar Nave...'
+            onChange={(event) => {
+                filterUpdate(event.target.value)
+                console.log(event.target.value)
+            }}
+        />
     )
 }
 
