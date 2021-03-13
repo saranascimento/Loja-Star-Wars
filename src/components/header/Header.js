@@ -124,10 +124,7 @@ const Header = () => {
             
             <HeaderTopWrapper>
                 {isMobile() && <HiShoppingCart color='#9e9e9e' size='2.5em'
-                    onClick={() => {
-                        setMobileCartIsOpen(true)
-                        console.log('cliquei')
-                    }}
+                    onClick={() => setMobileCartIsOpen(true)}
                 />}
 
                 <ThemesBtn onClick={() => {

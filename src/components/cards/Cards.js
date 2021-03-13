@@ -21,7 +21,7 @@ const Cards = () => {
        <Container>
             { starShips
             .filter((starShip) => {
-                return starShip.name.indexOf(filterStarShip) !== -1;
+                return starShip.name.toLowerCase().indexOf(filterStarShip) !== -1;
               })
             .map(starShip => {
                 return <Card starShip={starShip} key={starShip.name} />

@@ -24,8 +24,6 @@ export default createGlobalStyle`
         text-align: center;
         background-attachment: fixed;
         padding-bottom: 50px;
-        width: 100vw;
-    
         position: relative;
     }
 

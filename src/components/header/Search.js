@@ -18,8 +18,7 @@ const Search = () => {
             type='text' 
             placeholder='Buscar Nave...'
             onChange={(event) => {
-                filterUpdate(event.target.value)
-                console.log(event.target.value)
+                filterUpdate(event.target.value.toLowerCase())
             }}
         />
     )

@@ -8,8 +8,7 @@ import {FaArrowLeft} from 'react-icons/fa'
 const CartWrapper = styled.section`
     height: 485px;
     background: ${({theme}) => theme.colors.secondary};
-    width: 30%;
-    margin-right: 20px;
+    width: 28%;
     position: relative;
     border-radius: 8px;
     margin-top: 10px;
@@ -128,7 +127,7 @@ const CartBottom = styled.div`
 
     p {
         font-weight: 700;
-        font-size: 12px;
+        font-size: 14px;
     }
 `;
 
@@ -155,6 +154,7 @@ const BtnFinish = styled.button`
     border-bottom-right-radius: 8px;
     border-bottom-left-radius: 8px;
     outline: none;
+    font-weight: 600;
 
     &:hover {
         background-color: ${({theme}) => theme.colors.hover}
@@ -174,10 +174,7 @@ const Cart = () => {
             <CartTop>
                 {isMobile()  ? 
                     <FaArrowLeft  
-                        onClick={() => {
-                            setMobileCartIsOpen(false)
-                            console.log('cliquei')
-                        }}
+                        onClick={() =>  setMobileCartIsOpen(false)}
                     /> : null} 
                 <p>
                     Meu Carrinho </p>

@@ -31,7 +31,7 @@ const ContentWrapper = styled.div`
 `;
 
 const Main = styled.section`
-  width: 70%;
+  width: 75%;
 
   ${mediaQueries('tablet')`
     margin-top: 2em;

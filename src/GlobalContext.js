@@ -29,7 +29,7 @@ export const GlobalStorage = ({children}) => {
      
     React.useEffect(() => {
       let loadStarWarsStore = ()=> {
-        const url = 'http://swapi.dev/api/starships/';
+        const url = 'https://swapi.dev/api/starships/';
         fetch(url, {mode: 'cors'}
         ).then((response) => response.json()
         ).then(data =>  {
