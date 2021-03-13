@@ -9,11 +9,15 @@ export default {
         color: '#4c4545',
 
         light: '#aca58c',
+
+        hover: '#da0000'
+
+        
     },
 
     pictures: {
-        header: './images/vader/vader-cart.png',
-        cart: './images/vader/vader-header.png',
+        header: './images/vader/vader-header.png',
+        cart: './images/vader/vader-cart.png',
     },
     
     text: {

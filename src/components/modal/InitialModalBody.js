@@ -139,7 +139,7 @@ const InitialModalBody = () => {
                     }}>
 
                         <VaderImageWrapper >
-                            <img src="./images/vader/vader-header.png" />  
+                            <img src="./images/vader/vader-cart.png" />  
                         </VaderImageWrapper>
                   
                 </Card>

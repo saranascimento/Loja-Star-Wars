@@ -2,6 +2,7 @@ import React from 'react';
 
 import styled, { keyframes } from 'styled-components';
 import { GlobalContext } from '../../GlobalContext';
+import { mediaQueries } from '../../utils/mediaQueries';
 
 
 const animation = keyframes`
@@ -15,7 +16,7 @@ const ProductModalWrapper = styled.div`
     width: 100%;
     height: 100%;
     display: flex;
-    justify-content: space-between;
+    flex-wrap: wrap;
     opacity: 0;
     transform: scale(0.8);
     animation: ${animation} 0.3s forwards;
@@ -35,23 +36,52 @@ const CloseModal = styled.span`
     text-align: center;
 `;
 
+const DescriptionWrapper = styled.div`
+   flex: 2 1 180px;
+
+   
+`;
+
 const Title = styled.h1`
         color: yellow;
+
+        ${mediaQueries('mobile')`
+        padding-top: 20px;
+   `};
 `;
 
 const InfosBox = styled.div`
     color: aliceblue;
-    height: 70%;
-    padding-top: 8px;
+    height: auto;
+    margin: 16px 0px;
+
 
     p {
-        line-height: 25px;
+        line-height: 1.7em;
+        font-size: 1.25em;
+        
+        ${mediaQueries('laptop')`
+            line-height: 1.8em;
+             font-size: 1em;
+        `};
     }
 `;
 
 const ImageWrapper = styled.div`
-    width: 48%;
+    flex: 1 1 160px;
     border: 2px solid yellow;
+    height: 60%;
+    margin-right: 20px;
+
+    ${mediaQueries('laptop')`
+       height: 40%;
+    //    margin-right: 0px;
+
+    `};
+
+    ${mediaQueries('mobile')`
+       height: 25%;
+    `};
 
     img {
         width: 100%;
@@ -59,9 +89,7 @@ const ImageWrapper = styled.div`
     }
 `;
 
-const DescriptionWrapper = styled.div`
-    width: 48%; 
-`;
+
 
 const AddBtn = styled.button`
     background-color: #b2afaa;
@@ -85,7 +113,7 @@ const AddBtn = styled.button`
 
 const ProductModal = () => {
 
-    const {setProductModalIsOpen, productModalIsOpen, starShipClicked, setStarShipsInCart, starShipsInCart, setTotalPrice, isIncludedInCart} = React.useContext(GlobalContext);
+    const {setProductModalIsOpen, starShipClicked, setStarShipsInCart, starShipsInCart, setTotalPrice, isIncludedInCart, setTotalQuantity} = React.useContext(GlobalContext);
 
 
 
@@ -98,7 +126,7 @@ const ProductModal = () => {
     }
     
     return (
-        <ProductModalWrapper open={productModalIsOpen} >
+        <ProductModalWrapper >
             <CloseModal onClick={() => setProductModalIsOpen(false)}>x</CloseModal>
             <ImageWrapper>
                 <img src={`./images/Sentinel-class landing craft.png`} />
@@ -123,6 +151,7 @@ const ProductModal = () => {
                     onClick={() =>  {
                     setProductModalIsOpen(false)
                     includeShip(starShipClicked)
+                    setTotalQuantity(quantity => quantity + 1)
                     setTotalPrice(price => price += 
                         starShipClicked.cost_in_credits === 'unknown' ? 186 :
                         Number(starShipClicked.cost_in_credits.slice(0,3))

@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { GlobalContext } from '../../GlobalContext';
 import Search from './Search';
 import {mediaQueries} from '../../utils/mediaQueries';
-
+import {HiShoppingCart} from 'react-icons/hi';
 
 const HeaderWrapper = styled.header`
     height: 300px;
@@ -45,15 +45,18 @@ const HeaderWrapper = styled.header`
 
 `;
 
-const BtnThemesWrapper = styled.div`
+const HeaderTopWrapper = styled.div`
     position: absolute;
     top: 0;
     right: 0;
+    left: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
 `;
 
 const ThemesBtn = styled.button`
-    margin-top: 12px;
-    margin-right: 0;
+    margin: 12px 0px 0px 12px;
     border-radius: 20px;
     padding: 10px;
     cursor: pointer;
@@ -62,6 +65,14 @@ const ThemesBtn = styled.button`
     border: none;
     box-shadow: 0px 0px 4px 1px  ${({theme}) => theme.colors.primary};
     outline: none;
+    position: absolute;
+    top: 0;
+    right: 0;
+
+    &:hover {
+        background-color: ${({theme}) => theme.colors.hover};
+    }
+
 
     ${mediaQueries("mobile")`
         padding: 0.6em;
@@ -104,18 +115,26 @@ const Content = styled.div`
 
 const Header = () => {
 
-    const { theme, setThemesBtnClicked,ThemesBtnClicked, setInitialModalIsOpen } = React.useContext(GlobalContext);
+    const { theme, setThemesBtnClicked, setInitialModalIsOpen, setMobileCartIsOpen, isMobile } = React.useContext(GlobalContext);
    
 
     return (
         <HeaderWrapper>
-            <BtnThemesWrapper>
+            
+            <HeaderTopWrapper>
+                {isMobile() && <HiShoppingCart color='#9e9e9e' size='2em'
+                    onClick={() => {
+                        setMobileCartIsOpen(true)
+                        console.log('cliquei')
+                    }}
+                />}
+
                 <ThemesBtn onClick={() => {
                     setThemesBtnClicked(true)
                     setInitialModalIsOpen(true)
                 }}
                 >Temas</ThemesBtn>
-            </BtnThemesWrapper>
+            </HeaderTopWrapper>
 
             <ImageWrapper>
                     <img src={theme.pictures.header} />

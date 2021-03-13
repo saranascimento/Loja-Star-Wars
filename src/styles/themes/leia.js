@@ -9,6 +9,8 @@ export default {
         color: '#4c4545',
 
         light: 'aliceblue',
+
+        hover: '#2828fe'
         
     },
 

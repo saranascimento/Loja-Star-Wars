@@ -2,10 +2,11 @@ import React from 'react';
 import styled from 'styled-components';
 import { GlobalContext } from '../../GlobalContext';
 import Products from './Products';
-import {mediaQueries} from '../../utils/mediaQueries'
+import {mediaQueries} from '../../utils/mediaQueries';
+import {FaArrowLeft} from 'react-icons/fa'
 
 const CartWrapper = styled.section`
-    height: 420px;
+    height: 499px;
     background: ${({theme}) => theme.colors.secondary};
     width: 30%;
     margin-left: auto;
@@ -23,7 +24,8 @@ const CartWrapper = styled.section`
         flex-direction: column;
         overflow: hidden;
         height: 95px;
-        width: 80%;
+        width: 80%; 
+        display: none;
     `};
 `;
 
@@ -33,7 +35,6 @@ const CartTop = styled.div`
     background: black;
     display: flex;
     align-items: center;
-    justify-content: space-between;
     padding: 0 8px;
     margin-bottom: 16px;
     box-shadow: 0px 1px 7px 0px ${({theme}) => theme.colors.primary};
@@ -42,10 +43,10 @@ const CartTop = styled.div`
     border-bottom-left-radius: 0;
     color: ${({theme}) => theme.colors.light};
 
-    ${mediaQueries('tablet')`
-        position: relative;
-        z-index: 20;
-    `};
+    p {
+        margin: 2px 8px 0px 8px;
+        font-size: 18px;
+    }
    
 `;
 
@@ -110,6 +111,37 @@ const ImageWrapper = styled.div`
     }
 `;
 
+const CartBottom = styled.div`
+    position: absolute;
+    bottom: 55px;
+    left: 0;
+    right: 0;
+    box-shadow: 0px 1px 7px 0px black;
+    justify-content: space-between;
+    height: 75px;
+    background: ${({theme}) => theme.colors.primary};
+    display: flex;
+    color: white;
+    z-index: 10;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 10px;
+
+    p {
+        font-weight: 700;
+    }
+`;
+
+const Total = styled.div`
+    width: 100%;
+    justify-content: space-between;
+    display: flex;
+
+    p {
+        font-weight: 400;
+    }
+`;
+
 const BtnFinish = styled.button`
     position: absolute;
     bottom: -1px;
@@ -124,31 +156,31 @@ const BtnFinish = styled.button`
     border-bottom-left-radius: 8px;
     outline: none;
 
+    &:hover {
+        background-color: ${({theme}) => theme.colors.hover}
+    }
+
     &:disabled {
         cursor: no-drop;
     }
 `; 
- 
-
 
 const Cart = () => {
-    const { theme, totalPrice} = React.useContext(GlobalContext);
-    
-    let [activeMobileCart, changeActiveMobileCart] = React.useState(false);
-
-    const updateActive = (activeMobileCart) => {
-      if (window.matchMedia('(max-width: 768px)').matches) {
-        changeActiveMobileCart(!activeMobileCart);
-      }
-    };
+    const { theme, totalPrice, setThankfulModalIsOpen, totalQuantity, mobileCartIsOpen, setMobileCartIsOpen, isMobile } = React.useContext(GlobalContext);
 
     return (
-        <CartWrapper className={`${activeMobileCart ? 'activeCart' : ''}`} >
-            <CartTop 
-                onClick={() => updateActive(activeMobileCart)}
-            >
-                <p>Meu Carrinho</p>
-                <TotalPrice><span><img src='./images/moeda.png' alt="Moeda mestre Yoda" /></span> {totalPrice}</TotalPrice>
+        <CartWrapper 
+            className={`${ mobileCartIsOpen ? 'mobileCart' : ''}`}>
+            <CartTop>
+                {isMobile()  ? 
+                    <FaArrowLeft  
+                        onClick={() => {
+                            setMobileCartIsOpen(false)
+                            console.log('cliquei')
+                        }}
+                    /> : null} 
+                <p>
+                    Meu Carrinho </p>
             </CartTop>
             <CartBody>
                 <h1>{theme.text.cart}</h1>
@@ -156,9 +188,20 @@ const Cart = () => {
                     <img src={theme.pictures.cart}/>
                 </ImageWrapper>
                 <Products />
+               
             </CartBody>
+            <CartBottom >
+                <p>Seu pedido:</p>
+                <Total>
+                    <p>{totalQuantity} {totalQuantity > 1? 'Naves Espaciais' : 'Nave espacial'}</p>
+                    <TotalPrice>Total: {totalPrice}</TotalPrice>
+                </Total>
+            </CartBottom>
             <BtnFinish
                 disabled={totalPrice === 0 }
+                onClick={() => {
+                    setThankfulModalIsOpen(true)
+                }}
             >
                Finalizar compra
             </BtnFinish>

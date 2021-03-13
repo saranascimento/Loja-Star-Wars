@@ -18,11 +18,16 @@ const ModalWrapper = styled.div`
     align-items: center;
     box-shadow: 0px 0px 9px yellow;
     border-radius: 50px;
-    max-width: 1024px;
+    max-width: 900px;
+    max-height: 760px;
 
-    ${mediaQueries('mobile')`
-       padding: 30px;
+    ${mediaQueries('tablet')`
+        height: 100%;
+        width: 100%;
+        border-radius: 0px;
+        overflow: auto;
     `};
+
 `;
 
 const Overlay = styled.div`

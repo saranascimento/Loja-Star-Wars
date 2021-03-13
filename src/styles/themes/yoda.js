@@ -9,6 +9,8 @@ export default {
         color: '#4c4545',
 
         light: 'aliceblue',
+        // thankfulTitle: '#5cec5c',
+        hover: '#029d02'
     },
 
     pictures: {

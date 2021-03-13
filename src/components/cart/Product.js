@@ -18,7 +18,7 @@ const ProductWrapper = styled.article`
     box-shadow: 0px 0px 5px 1px ${({theme}) => theme.colors.primary};
 
     p {
-        font-size: 10px;
+        font-size: 12px;
         text-align: initial;
         color: whitesmoke;
     }
@@ -100,48 +100,47 @@ const QuantityBox = styled.div`
 `;
 
 const Product = ({starShipInCart}) => {
-    const {starShipsInCart, setStarShipsInCart, setTotalPrice, totalPrice} = React.useContext(GlobalContext);
-    const [quantity, setQuantity] = React.useState(starShipInCart.quantity)
+    const {starShipsInCart, setStarShipsInCart, setTotalPrice, totalPrice, setTotalQuantity, totalQuantity} = React.useContext(GlobalContext);
+    const [quantity, setQuantity] = React.useState(starShipInCart.quantity);
+    const [price, setPrice] = React.useState(
+        starShipInCart.cost_in_credits === 'unknown' ? 
+            186 : Number(
+        starShipInCart.cost_in_credits.slice(0,3)));
 
-    function calculatePriceByQuantity(starShipInCart) {
-        return starShipInCart.cost_in_credits === 'unknown' ? 
-        186 * 
-        starShipInCart.quantity :
-    Number(
-        starShipInCart.cost_in_credits.slice(0,3)) * 
-        starShipInCart.quantity
+
+    function calculatePriceByQuantity() {
+        return price * 1
     }
 
     function decrement() {
         if(quantity > 1) {
             setQuantity(quantity => quantity - 1) 
-
-            setTotalPrice(totalPrice - calculatePriceByQuantity(starShipInCart))
+            setTotalQuantity(quantity => quantity - 1)
+            setTotalPrice(totalPrice - calculatePriceByQuantity())
         }
     }
 
     function increment() {
         if(quantity < 9) {
             setQuantity(quantity => quantity + 1)
-            
-            setTotalPrice(totalPrice + calculatePriceByQuantity(starShipInCart))
+            setTotalQuantity(quantity => quantity + 1)
+            setTotalPrice(totalPrice + calculatePriceByQuantity())
+
         }
     }
-    
-  
+      
     function remove() {
         let FilteredList = starShipsInCart.filter(starShip => {
             if(starShip.name === starShipInCart.name) {
-                setTotalPrice(totalPrice - calculatePriceByQuantity(starShip))
-                starShip.quantity = 1
+
+                setTotalPrice(totalPrice - (price * quantity))
+                setTotalQuantity(totalQuantity - quantity)
             }
             
             return starShip.name !== starShipInCart.name;
         })
 
         setStarShipsInCart(FilteredList)
-
-        
     }
 
     return (

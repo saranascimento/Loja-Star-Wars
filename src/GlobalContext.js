@@ -12,14 +12,18 @@ export const GlobalStorage = ({children}) => {
     //Modal
     const [initialModalIsOpen, setInitialModalIsOpen] = React.useState(false);
     const [productModalIsOpen, setProductModalIsOpen] = React.useState(false);
+    const [thankfulModalIsOpen, setThankfulModalIsOpen] = React.useState(false);
     
     // actions
     //Card
     const [starShipClicked, setStarShipClicked ] = React.useState(null);
     //Cart
     const [starShipsInCart, setStarShipsInCart ] = React.useState([]);
+    const [mobileCartIsOpen, setMobileCartIsOpen ] = React.useState(false);
     // const [starShipsInCart, setStarShipsInCart ] = usePersistedState('starShipsInCart', []);
     const [totalPrice, setTotalPrice ] = React.useState(0)
+    const [totalQuantity, setTotalQuantity ] = React.useState(0)
+
      
     React.useEffect(() => {
       let loadStarWarsStore = ()=> {
@@ -37,6 +41,9 @@ export const GlobalStorage = ({children}) => {
       loadStarWarsStore()
     }, [])
 
+    const isMobile = () => {
+      return window.matchMedia('(max-width: 768px)').matches;
+  }
    
     function isIncludedInCart(starShipClicked) {
       return !!starShipsInCart.find((starShip) => starShip.name === starShipClicked.name);
@@ -45,15 +52,18 @@ export const GlobalStorage = ({children}) => {
     return (
         <GlobalContext.Provider 
             value={{
+                isMobile,
                 starShips,
                 theme, setTheme,
-                initialModalIsOpen, setInitialModalIsOpen,
-                productModalIsOpen, setProductModalIsOpen,
+                totalPrice, setTotalPrice,
+                totalQuantity, setTotalQuantity,
+                mobileCartIsOpen, setMobileCartIsOpen,
                 starShipClicked, setStarShipClicked,
                 starShipsInCart, setStarShipsInCart,
                 ThemesBtnClicked, setThemesBtnClicked,
-                totalPrice, setTotalPrice,
-
+                initialModalIsOpen, setInitialModalIsOpen,
+                productModalIsOpen, setProductModalIsOpen,
+                thankfulModalIsOpen, setThankfulModalIsOpen,
                 isIncludedInCart
             }}
         
