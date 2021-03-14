@@ -19,19 +19,17 @@ const ContentWrapper = styled.div`
     margin: 0 auto;
     display: flex;
     max-width: 1200px;
+    justify-content: center;
 
     ${mediaQueries("desktop")`
       width: 90vw;
     `};
 
-    ${mediaQueries("tablet")`
-      flex-direction: column-reverse;
-      width: 80vw;
-    `};
 `;
 
 const Main = styled.section`
   width: 75%;
+  
 
   ${mediaQueries('tablet')`
     margin-top: 2em;

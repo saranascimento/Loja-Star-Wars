@@ -38,8 +38,6 @@ const CloseModal = styled.span`
 
 const DescriptionWrapper = styled.div`
    flex: 2 1 180px;
-
-   
 `;
 
 const Title = styled.h1`
@@ -54,8 +52,8 @@ const InfosBox = styled.div`
     color: aliceblue;
     height: auto;
     margin: 16px 0px;
-
-
+    border-top-style: inset;
+    
     p {
         line-height: 1.7em;
         font-size: 1.25em;

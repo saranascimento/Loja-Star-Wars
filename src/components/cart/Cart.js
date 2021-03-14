@@ -15,7 +15,7 @@ const CartWrapper = styled.section`
     border: 1px solid ${({theme}) => theme.colors.primary};
     
 
-    ${mediaQueries("tablet")`
+    ${mediaQueries("laptop")`
         width: 80%;
         margin: auto;
         align-items: center;
@@ -69,7 +69,8 @@ const CartBody = styled.div`
     align-items: center;
     justify-content: center;
     position: relative;
-    overflow: scroll;
+    overflow: auto;
+    height: calc(100% - 200px);
     background: ${({theme}) => theme.colors.secundary};
     scrollbar-color: ${({theme}) => theme.colors.secondary}  ${({theme}) => theme.colors.secondary};
     scrollbar-width: thin ;
@@ -181,7 +182,7 @@ const Cart = () => {
             setThankfulModalIsOpen, 
             mobileCartIsOpen, 
             setMobileCartIsOpen, 
-            isMobile, 
+            isSmall, 
             getTotalPrice, 
             getTotalQuantity 
         } = React.useContext(GlobalContext);
@@ -189,7 +190,7 @@ const Cart = () => {
     return (
         <CartWrapper  className={`${ mobileCartIsOpen ? 'mobileCart' : ''}`} >
             <CartTop>
-                {isMobile()  ? 
+                {isSmall()  ? 
                     <FaArrowLeft  
                         onClick={() =>  setMobileCartIsOpen(false)}
                     /> : null} 

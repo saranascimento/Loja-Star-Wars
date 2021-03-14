@@ -19,9 +19,9 @@ const ModalWrapper = styled.div`
     box-shadow: 0px 0px 9px yellow;
     border-radius: 50px;
     max-width: 900px;
-    max-height: 760px;
+    max-height: 800px;
 
-    ${mediaQueries('tablet')`
+    ${mediaQueries('laptop')`
         height: 100%;
         width: 100%;
         border-radius: 0px;

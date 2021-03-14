@@ -40,8 +40,8 @@ export const GlobalStorage = ({children}) => {
       loadStarWarsStore()
     }, [])
 
-    const isMobile = () => {
-      return window.matchMedia('(max-width: 768px)').matches;
+    const isSmall = () => {
+      return window.matchMedia('(max-width: 1024px)').matches;
     }
    
     const isIncludedInCart =  (productClicked) => {
@@ -70,7 +70,7 @@ export const GlobalStorage = ({children}) => {
     return (
         <GlobalContext.Provider 
             value={{
-                isMobile,
+                isSmall,
                 starShips,
                 getTotalPrice,
                 filterUpdate,

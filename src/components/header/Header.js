@@ -21,7 +21,6 @@ const HeaderWrapper = styled.header`
     h1 {
         text-shadow: ${({theme}) => theme.colors.primary} 0px 0px 0.2em;;
         margin-bottom: 20px;
-        transform: perspective(380px) rotateX( 22deg);
         padding: 0 50px;
 
         ${mediaQueries('laptop')`
@@ -133,7 +132,7 @@ const Header = ({style}) => {
             setThemesBtnClicked, 
             setInitialModalIsOpen, 
             setMobileCartIsOpen, 
-            isMobile, 
+            isSmall, 
             getTotalQuantity
         } = React.useContext(GlobalContext);
    
@@ -142,7 +141,7 @@ const Header = ({style}) => {
         <HeaderWrapper style={style}>
             
             <HeaderTopWrapper>
-                {isMobile() && 
+                {isSmall() && 
                     <>
                         <HiShoppingCart 
                             color='#9e9e9e' 
