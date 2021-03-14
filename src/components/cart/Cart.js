@@ -69,7 +69,7 @@ const CartBody = styled.div`
     align-items: center;
     justify-content: center;
     position: relative;
-    /* overflow: scroll; */
+    overflow: scroll;
     background: ${({theme}) => theme.colors.secundary};
     scrollbar-color: ${({theme}) => theme.colors.secondary}  ${({theme}) => theme.colors.secondary};
     scrollbar-width: thin ;
