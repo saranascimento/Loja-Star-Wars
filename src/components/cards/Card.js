@@ -1,7 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 import { GlobalContext } from '../../GlobalContext';
-import {mediaQueries} from '../../utils/mediaQueries'
+import {mediaQueries} from '../../utils/mediaQueries';
+import {RiShoppingBag2Fill} from 'react-icons/ri';
 
 const Overlay = styled.div`
     position: absolute;
@@ -111,38 +112,42 @@ const AddedToCart = styled.span`
     display: none;
 `;
 
-const Card = ({starShip}) => {
+const Card = ({product}) => {
     
-    const { setProductModalIsOpen, setStarShipClicked, isIncludedInCart } = React.useContext(GlobalContext)
-    
+    const { setProductModalIsOpen, setProductClicked, isIncludedInCart } = React.useContext(GlobalContext)
+
+    if(product.length < 0) return null
+
     return (
         <>
             <CardWrapper>
                 <AddedToCart 
                     style={{
-                        display: !!isIncludedInCart(starShip) ?  
+                        display: !!isIncludedInCart(product) ?  
                         'block' : 
-                        'none'}}
+                        'none'
+                    }}
                 >
-                    Adicionado
+                   
+                    <RiShoppingBag2Fill size='2em' />
                 </AddedToCart>
 
                 <ImageWrapper>
-                    <img src={`./images/${starShip.name}.png`} />
+                    <img src={`./images/${product.name}.png`} />
                 </ImageWrapper>
 
                 <Infos>
-                    <h3> {starShip.name}</h3>
+                    <h3> {product.name}</h3>
                     <Price>
                         <span><img src='./images/moeda.png' /></span>
-                        <p>{starShip.cost_in_credits === 'unknown' ? '186' : starShip.cost_in_credits.slice(0,3)}</p>
+                        <p>{product.cost_in_credits === 'unknown' ? '186' : product.cost_in_credits.slice(0,3)}</p>
                     </Price>
                     </Infos>
                 <Overlay>
                     <BtnSeeMore 
                        onClick={() => {
                            setProductModalIsOpen(true)
-                           setStarShipClicked(starShip)
+                           setProductClicked(product)
                         } }>Ver Mais
                     </BtnSeeMore>
                 </Overlay>

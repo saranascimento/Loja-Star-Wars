@@ -12,19 +12,19 @@ const Container = styled.div`
 `;
 
 const Cards = () => {
-    const {starShips, starShipsInCart, filterStarShip} = React.useContext(GlobalContext);
+    const {starShips, filterStarShip} = React.useContext(GlobalContext);
    
-    if(starShipsInCart.length < 0) return null
+   if(starShips.length < 0) return null
    
     return (
        <>
        <Container>
-            { starShips
+            { starShips && starShips
             .filter((starShip) => {
                 return starShip.name.toLowerCase().indexOf(filterStarShip) !== -1;
               })
             .map(starShip => {
-                return <Card starShip={starShip} key={starShip.name} />
+                return <Card product={starShip} key={starShip.name} />
             }).slice(0, 9)}
         </Container>
        </>

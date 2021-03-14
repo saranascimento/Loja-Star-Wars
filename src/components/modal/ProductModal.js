@@ -20,7 +20,7 @@ const ProductModalWrapper = styled.div`
     opacity: 0;
     transform: scale(0.8);
     animation: ${animation} 0.3s forwards;
-
+    position: relative;
 `;
 
 const CloseModal = styled.span`
@@ -28,8 +28,8 @@ const CloseModal = styled.span`
     height: 20px;
     background-color: #b2afaa;
     position: absolute;
-    top: 16px;
-    right: 30px;
+    top: -25px;
+    right: -20px;
     border-radius: 50%;
     color: #292903eb;
     cursor: pointer;
@@ -75,8 +75,6 @@ const ImageWrapper = styled.div`
 
     ${mediaQueries('laptop')`
        height: 40%;
-    //    margin-right: 0px;
-
     `};
 
     ${mediaQueries('mobile')`
@@ -113,16 +111,25 @@ const AddBtn = styled.button`
 
 const ProductModal = () => {
 
-    const {setProductModalIsOpen, starShipClicked, setStarShipsInCart, starShipsInCart, setTotalPrice, isIncludedInCart, setTotalQuantity} = React.useContext(GlobalContext);
+    const {setProductModalIsOpen, productClicked, setCart, cart, setTotalPrice, isIncludedInCart, setTotalQuantity} = React.useContext(GlobalContext);
 
 
 
-    function includeShip(starShipClicked) {
-        if(!isIncludedInCart(starShipClicked)) {
-            setStarShipsInCart([...starShipsInCart, starShipClicked]);
-            return
+    const addToCart = (product) => {
+        let newCart = [...cart];
+        let itemInCart = newCart.find((item) =>  product.name === item.name);
+
+        if(itemInCart && itemInCart.quantity < 9 ) {
+             itemInCart.quantity++;
+        }   
+        else if(!itemInCart) {
+                itemInCart = {
+                    ...product,
+                    quantity: 1,
+            };
+           newCart.push(itemInCart);
         }
-        
+        setCart(newCart)
     }
     
     return (
@@ -134,34 +141,27 @@ const ProductModal = () => {
 
             <DescriptionWrapper>
                 <div>
-                    <Title>{starShipClicked.name}</Title>
+                    <Title>{productClicked.name}</Title>
                 </div>
                 <InfosBox>
-                    <p>Comprimento: {starShipClicked.length}</p> 
-                    <p>Capacidade de carga: {starShipClicked.consumables}</p>
-                    <p>Tripulação: {starShipClicked.cargo_capacity}</p> 
-                    <p>Velocidade atmosférica máxima: {starShipClicked.max_atmosphering_speed}</p>
-                    <p>Fabricante: {starShipClicked.manufacturer}</p> 
-                    <p>Modelo: {starShipClicked.model}</p> 
-                    <p>Capacidade de passageiros: {starShipClicked.passengers}</p>
-                    <p>Classe: {starShipClicked.starship_class}</p>
+                    <p>Comprimento: {productClicked.length}</p> 
+                    <p>Capacidade de carga: {productClicked.consumables}</p>
+                    <p>Tripulação: {productClicked.cargo_capacity}</p> 
+                    <p>Velocidade atmosférica máxima: {productClicked.max_atmosphering_speed}</p>
+                    <p>Fabricante: {productClicked.manufacturer}</p> 
+                    <p>Modelo: {productClicked.model}</p> 
+                    <p>Capacidade de passageiros: {productClicked.passengers}</p>
+                    <p>Classe: {productClicked.starship_class}</p>
                 </InfosBox>
                 <AddBtn 
-                    disabled={!!isIncludedInCart(starShipClicked)}
-                    onClick={() =>  {
-                    setProductModalIsOpen(false)
-                    includeShip(starShipClicked)
-                    setTotalQuantity(quantity => quantity + 1)
-                    setTotalPrice(price => price += 
-                        starShipClicked.cost_in_credits === 'unknown' ? 186 :
-                        Number(starShipClicked.cost_in_credits.slice(0,3))
-                    )    
-                }}>
+                    className={`${!!isIncludedInCart(productClicked) ? 'btnAdicionado' : ''}`}
+                    onClick={() => addToCart(productClicked)}>
                     {
-                    !!isIncludedInCart(starShipClicked) ?
-                    'Você já adicionou esse produto' : 
+                    !!isIncludedInCart(productClicked) ?
+                    'Você adicionou esse produto' : 
                     'adicionar ao carrinho'
-                    }</AddBtn>
+                    }
+                    </AddBtn>
             </DescriptionWrapper>
         </ProductModalWrapper>
     )

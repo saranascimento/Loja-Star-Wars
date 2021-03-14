@@ -69,9 +69,10 @@ const CartBody = styled.div`
     align-items: center;
     justify-content: center;
     position: relative;
-    overflow: scroll;
+    /* overflow: scroll; */
     background: ${({theme}) => theme.colors.secundary};
-    
+    scrollbar-color: ${({theme}) => theme.colors.secondary}  ${({theme}) => theme.colors.secondary};
+    scrollbar-width: thin ;
 
     h1 {
         opacity: 0.3;
@@ -94,6 +95,15 @@ const CartBody = styled.div`
         background-color: ${({theme}) => theme.colors.primary};
         border-radius: 5px;
     }
+`;
+
+const TextWrapper = styled.div`
+    height: 291px;
+    width: 200px;
+    position: sticky;
+    top: 0;
+    display: flex;
+    align-items: center;
 `;
 
 const ImageWrapper = styled.div`
@@ -166,11 +176,18 @@ const BtnFinish = styled.button`
 `; 
 
 const Cart = () => {
-    const { theme, totalPrice, setThankfulModalIsOpen, totalQuantity, mobileCartIsOpen, setMobileCartIsOpen, isMobile } = React.useContext(GlobalContext);
+    const { 
+            theme, 
+            setThankfulModalIsOpen, 
+            mobileCartIsOpen, 
+            setMobileCartIsOpen, 
+            isMobile, 
+            getTotalPrice, 
+            getTotalQuantity 
+        } = React.useContext(GlobalContext);
 
     return (
-        <CartWrapper 
-            className={`${ mobileCartIsOpen ? 'mobileCart' : ''}`}>
+        <CartWrapper  className={`${ mobileCartIsOpen ? 'mobileCart' : ''}`} >
             <CartTop>
                 {isMobile()  ? 
                     <FaArrowLeft  
@@ -180,7 +197,8 @@ const Cart = () => {
                     Meu Carrinho </p>
             </CartTop>
             <CartBody>
-                <h1>{theme.text.cart}</h1>
+                
+                <TextWrapper><h1>{theme.text.cart}</h1></TextWrapper>
                 <ImageWrapper> 
                     <img src={theme.pictures.cart}/>
                 </ImageWrapper>
@@ -190,12 +208,12 @@ const Cart = () => {
             <CartBottom >
                 <p>Seu pedido:</p>
                 <Total>
-                    <p>{totalQuantity} {totalQuantity > 1? 'Naves Espaciais' : 'Nave espacial'}</p>
-                    <TotalPrice>Total: {totalPrice}</TotalPrice>
+                    <p>{getTotalQuantity()} {getTotalQuantity() > 1 ? 'Naves Espaciais' : 'Nave espacial'}</p>
+                    <TotalPrice>Total: {getTotalPrice() }</TotalPrice>
                 </Total>
             </CartBottom>
             <BtnFinish
-                disabled={totalPrice === 0 }
+                disabled={getTotalPrice() === 0 }
                 onClick={() => {
                     setThankfulModalIsOpen(true)
                 }}

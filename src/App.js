@@ -35,7 +35,6 @@ const Main = styled.section`
 
   ${mediaQueries('tablet')`
     margin-top: 2em;
-    display: none;
     width: 100%;
   `};
 
@@ -50,7 +49,7 @@ function App() {
       <ThemeProvider theme={theme}>
         <GlobalStyle />
         <div className="App">
-          <Header />
+          <Header  style={{display: mobileCartIsOpen ? 'none' : 'flex'}} />
           <ContentWrapper >
             <Main style={{display: mobileCartIsOpen ? 'none' : 'block'}}>
               <Cards />

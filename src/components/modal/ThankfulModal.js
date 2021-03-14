@@ -97,6 +97,10 @@ const LeiaImageWrapper = styled.div`
 const TextWrapper = styled.div`
         flex: 2 1 450px;
         margin-left: 20px;
+
+        ${mediaQueries('tablet') `
+            font-size: 0.8em;
+        `}
         
         p {
             line-height: 1.8em;
@@ -121,13 +125,26 @@ const TotalPrice = styled.div`
 
 const ThankfulModal = () => {
 
-    const { theme, setThankfulModalIsOpen, totalPrice, totalQuantity} = React.useContext(GlobalContext);
-  
+    const { 
+        theme, 
+        setThankfulModalIsOpen, 
+        setMobileCartIsOpen,
+        setCart,
+        getTotalPrice,
+        getTotalQuantity } = React.useContext(GlobalContext);
+
+    const resetCart = () => {
+        setMobileCartIsOpen(false);
+        setCart([]);
+    }
 
     return (
             <Container >
                  <Remove 
-                    onClick={() => setThankfulModalIsOpen(false)}
+                    onClick={() => {
+                        setThankfulModalIsOpen(false)
+                        resetCart()
+                    }}
                 >x
                 </Remove>
                 { theme.title  === 'yoda' ?
@@ -151,9 +168,9 @@ const ThankfulModal = () => {
               
                 }
                 <TextWrapper>
-                    <p>Você Comprou: {totalQuantity} Naves Espaciais.</p>
-                    <TotalPrice><p>Gastou: <img src='./images/moeda.png' alt="Moeda mestre Yoda" /> {totalPrice} Moedas.</p></TotalPrice>
-                    <p>Receberá um cashback de: {Number(Math.random() * totalPrice).toFixed(0)}.</p>
+                    <p>Você Comprou: {getTotalQuantity()} {getTotalQuantity() > 1? 'Naves Espaciais' : 'Nave espacial'}.</p>
+                    <TotalPrice><p>Gastou: <img src='./images/moeda.png' alt="Moeda mestre Yoda" /> {getTotalPrice()} Moedas.</p></TotalPrice>
+                    <p>Receberá um cashback de: {Number(Math.random() * getTotalPrice()).toFixed(0)}.</p>
                     <h1> {theme.title  === 'vader' ? 'Não se atreva a falhar comigo.' : 'Que a força esteja com você!'}</h1>
                     
                 </TextWrapper>

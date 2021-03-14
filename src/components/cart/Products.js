@@ -15,13 +15,13 @@ const ProductsWrapper = styled.div`
 `;
 
 const Products = () => {
-    const { starShipsInCart} = React.useContext(GlobalContext)
-    if(starShipsInCart.length < 0) return null
+    const { cart } = React.useContext(GlobalContext)
+    if(cart.length < 0) return null
 
     return (
         <ProductsWrapper>
-            {starShipsInCart.map((starShipInCart) => {
-                   return <Product starShipInCart={starShipInCart}  key={starShipInCart.name}/>
+            {cart.map((product, index) => {
+                   return <Product product={product}  key={index}/>
             })}
         </ProductsWrapper>
     )

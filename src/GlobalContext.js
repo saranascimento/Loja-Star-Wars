@@ -1,6 +1,7 @@
 import React from 'react';
 import yoda from './styles/themes/yoda';
 import usePersistedState from './utils/usePersistedState';
+import useSessionStorage from './utils/useSessionStorage'
 export const GlobalContext = React.createContext();
 
 export const GlobalStorage = ({children}) => {
@@ -16,17 +17,13 @@ export const GlobalStorage = ({children}) => {
     
     // actions
     //Card
-    const [starShipClicked, setStarShipClicked ] = React.useState(null);
+    const [productClicked, setProductClicked ] = React.useState(null);
     const [filterStarShip, setFilterStarShip] = React.useState('');
 
     //Cart
-    const [starShipsInCart, setStarShipsInCart ] = React.useState([]);
     const [mobileCartIsOpen, setMobileCartIsOpen ] = React.useState(false);
-    // const [starShipsInCart, setStarShipsInCart ] = usePersistedState('starShipsInCart', []);
-    const [totalPrice, setTotalPrice ] = React.useState(0)
-    const [totalQuantity, setTotalQuantity ] = React.useState(0)
-
-     
+    const [cart, setCart ] = useSessionStorage('cart', []);
+  
     React.useEffect(() => {
       let loadStarWarsStore = ()=> {
         const url = 'https://swapi.dev/api/starships/';
@@ -47,8 +44,8 @@ export const GlobalStorage = ({children}) => {
       return window.matchMedia('(max-width: 768px)').matches;
     }
    
-    function isIncludedInCart(starShipClicked) {
-      return !!starShipsInCart.find((starShip) => starShip.name === starShipClicked.name);
+    const isIncludedInCart =  (productClicked) => {
+      return !!cart.find((starShip) => starShip.name === productClicked.name);
     }
 
     const filterUpdate = (value) => {
@@ -56,19 +53,33 @@ export const GlobalStorage = ({children}) => {
     };
 
 
+    const getTotalPrice = () => {
+      return cart.reduce((sum, {cost_in_credits, quantity}) =>  sum + (cost_in_credits === 'unknown' ? 186 : Number(
+        cost_in_credits.slice(0,3)) * quantity), 0)
+
+    }
+
+    const getTotalQuantity = () => {
+      return cart.reduce(
+        (sum, {quantity }) => 
+          sum + quantity
+        , 0
+      );
+    };
+
     return (
         <GlobalContext.Provider 
             value={{
                 isMobile,
                 starShips,
+                getTotalPrice,
                 filterUpdate,
+                getTotalQuantity,
                 theme, setTheme,
                 isIncludedInCart,
-                totalPrice, setTotalPrice,
-                totalQuantity, setTotalQuantity,
                 filterStarShip, setFilterStarShip,
-                starShipClicked, setStarShipClicked,
-                starShipsInCart, setStarShipsInCart,
+                productClicked, setProductClicked,
+                cart, setCart,
                 mobileCartIsOpen, setMobileCartIsOpen,
                 ThemesBtnClicked, setThemesBtnClicked,
                 initialModalIsOpen, setInitialModalIsOpen,

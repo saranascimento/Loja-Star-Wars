@@ -56,12 +56,24 @@ const HeaderTopWrapper = styled.div`
     height: 50px;
 `;
 
+const Quantity = styled.div`
+    position: absolute;
+    top: 8px;
+    left: 30px;
+    background-color:  ${({theme}) => theme.colors.primary};
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    font-size: 14px;
+    padding: 2px;
+`;
+
 const ThemesBtn = styled.button`
     margin: 12px 0px 0px 12px;
     border-radius: 20px;
     padding: 10px;
     cursor: pointer;
-    color: bisque;
+    color: yellow;
     background-color: ${({theme}) => theme.colors.primary};
     border: none;
     box-shadow: 0px 0px 4px 1px  ${({theme}) => theme.colors.primary};
@@ -114,18 +126,32 @@ const Content = styled.div`
 
 
 
-const Header = () => {
+const Header = ({style}) => {
 
-    const { theme, setThemesBtnClicked, setInitialModalIsOpen, setMobileCartIsOpen, isMobile } = React.useContext(GlobalContext);
+    const { 
+            theme, 
+            setThemesBtnClicked, 
+            setInitialModalIsOpen, 
+            setMobileCartIsOpen, 
+            isMobile, 
+            getTotalQuantity
+        } = React.useContext(GlobalContext);
    
 
     return (
-        <HeaderWrapper>
+        <HeaderWrapper style={style}>
             
             <HeaderTopWrapper>
-                {isMobile() && <HiShoppingCart color='#9e9e9e' size='2.5em'
-                    onClick={() => setMobileCartIsOpen(true)}
-                />}
+                {isMobile() && 
+                    <>
+                        <HiShoppingCart 
+                            color='#9e9e9e' 
+                            size='2.5em'
+                            onClick={() => setMobileCartIsOpen(true)}
+                        />
+                        <Quantity>{getTotalQuantity()}</Quantity>
+                    </>
+                }
 
                 <ThemesBtn onClick={() => {
                     setThemesBtnClicked(true)

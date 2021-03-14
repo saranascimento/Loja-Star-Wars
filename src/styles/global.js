@@ -34,7 +34,7 @@ export default createGlobalStyle`
     }
 
     .btnAdicionado {
-        background-color: #757509;
+        background-color: #757509 !important;
         color: aliceblue; 
     }
 

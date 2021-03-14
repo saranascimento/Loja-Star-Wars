@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { AiOutlineDown, AiOutlineUp } from 'react-icons/ai';
 import { GlobalContext } from '../../GlobalContext';
-
+import { mediaQueries } from '../../utils/mediaQueries';
 
 const ProductWrapper = styled.article`
     width: 100%;
@@ -12,8 +12,7 @@ const ProductWrapper = styled.article`
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-bottom: 8px;
-    place-content: flex-start;
+    margin-bottom: 6px;
     position: relative;
     box-shadow: 0px 0px 5px 1px ${({theme}) => theme.colors.primary};
 
@@ -25,9 +24,9 @@ const ProductWrapper = styled.article`
 `;
 
 const ProductImage = styled.figure`
-    width: 30px;
+    width: 60px;
     margin-right: 8px;
-    height: 30px;
+    height: 50px;
 
     img {
         width: 100%;
@@ -37,6 +36,7 @@ const ProductImage = styled.figure`
 
 const Description = styled.div`
     width: 150px;
+    margin-right: 8px;
 `;
 
 const PriceWrapper = styled.div`
@@ -66,6 +66,7 @@ const Remove = styled.span`
     border-radius: 50%;
     color: #292903eb;
     cursor: pointer;
+    box-shadow: 0px 0px 5px 1px ${({theme}) => theme.colors.primary};
 `;
 
 const QuantityBox = styled.div`
@@ -74,9 +75,13 @@ const QuantityBox = styled.div`
     align-items: center;
     justify-content: center;
     margin-left: auto;
+    
+    ${mediaQueries('tablet')`
+        margin-right: 30px;
+    `};
 
     input {
-        width: 20px;
+        width: 35px;
         text-align: center;
         background-color: transparent;
         outline: none;
@@ -87,7 +92,7 @@ const QuantityBox = styled.div`
             border: 1px solid red;
         }
 
-        &::-webkit-inner-spin-button{
+        &::-webkit-inner-spin-button {
             -webkit-appearance: none; 
             margin: 0; 
         }
@@ -99,48 +104,37 @@ const QuantityBox = styled.div`
     }
 `;
 
-const Product = ({starShipInCart}) => {
-    const {starShipsInCart, setStarShipsInCart, setTotalPrice, totalPrice, setTotalQuantity, totalQuantity} = React.useContext(GlobalContext);
-    const [quantity, setQuantity] = React.useState(starShipInCart.quantity);
-    const [price, setPrice] = React.useState(
-        starShipInCart.cost_in_credits === 'unknown' ? 
-            186 : Number(
-        starShipInCart.cost_in_credits.slice(0,3)));
+const Product = ({product}) => {
+    const {
+        cart, 
+        setCart, 
+    } = React.useContext(GlobalContext);
 
+    function decrement(product) {
+        let newCart = [...cart];
+        let itemInCart = newCart.find((item) =>  product.name === item.name);
 
-    function calculatePriceByQuantity() {
-        return price * 1
+        if(itemInCart && itemInCart.quantity > 1) {
+             itemInCart.quantity--;
+        }   
+        
+        setCart(newCart)
     }
 
-    function decrement() {
-        if(quantity > 1) {
-            setQuantity(quantity => quantity - 1) 
-            setTotalQuantity(quantity => quantity - 1)
-            setTotalPrice(totalPrice - calculatePriceByQuantity())
-        }
-    }
+    function increment(product) {
+        let newCart = [...cart];
+        let itemInCart = newCart.find((item) =>  product.name === item.name);
 
-    function increment() {
-        if(quantity < 9) {
-            setQuantity(quantity => quantity + 1)
-            setTotalQuantity(quantity => quantity + 1)
-            setTotalPrice(totalPrice + calculatePriceByQuantity())
-
-        }
+        if(itemInCart && itemInCart.quantity < 9 ) {
+             itemInCart.quantity++;
+        }   
+        
+        setCart(newCart)
     }
       
     function remove() {
-        let FilteredList = starShipsInCart.filter(starShip => {
-            if(starShip.name === starShipInCart.name) {
-
-                setTotalPrice(totalPrice - (price * quantity))
-                setTotalQuantity(totalQuantity - quantity)
-            }
-            
-            return starShip.name !== starShipInCart.name;
-        })
-
-        setStarShipsInCart(FilteredList)
+        let currentItems = cart.filter(starShip => starShip.name !== product.name)
+        setCart(currentItems)
     }
 
     return (
@@ -150,32 +144,37 @@ const Product = ({starShipInCart}) => {
             >x
             </Remove>
             <ProductImage>
-                <img src={`./images/${starShipInCart.name}.png`} />
+                <img src={`./images/${product.name}.png`} />
             </ProductImage>
             <Description>
-                <p>{starShipInCart.name}</p>
+                <p>{product.name}</p>
                 <PriceWrapper>
                     <img src='./images/moeda.png' alt="Moeda mestre Yoda" />
-                    <p>{starShipInCart.cost_in_credits === 'unknown' ? '186' : starShipInCart.cost_in_credits.slice(0,3)}</p>
+                    <p>
+                        { product.cost_in_credits === 'unknown' ? '186' : 
+                          product.cost_in_credits.slice(0,3)}
+                    </p>
                 </PriceWrapper> 
             </Description>
             <QuantityBox>
                 <span>
                     <AiOutlineDown 
                     style={{color: 'aliceblue', cursor: 'pointer'}} 
-                    onClick={decrement} />
+                    onClick={() => decrement(product)} />
                 </span>  
                 <input 
-                    type="number" 
-                    min='1'
-                    max='5'
-                    value={quantity} 
+                    type="tel" 
+                    value={product.quantity} 
                     readOnly
                     // onChange={(event) => {
-                    //     setQuantity(event.target.value.slice(0,1))
+                    //     setQuantity(quantity => event.target.value.slice(0,1))
                     // }}
                 />  
-                <span><AiOutlineUp style={{ color: 'aliceblue', cursor: 'pointer'}} onClick={increment}/></span>    
+                <span>
+                    <AiOutlineUp 
+                        style={{ color: 'aliceblue', cursor: 'pointer'}} 
+                        onClick={() => increment(product)}/>
+                </span>    
             </QuantityBox>
         </ProductWrapper>
     )
