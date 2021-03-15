@@ -134,7 +134,7 @@ const ProductModal = () => {
         <ProductModalWrapper >
             <CloseModal onClick={() => setProductModalIsOpen(false)}>x</CloseModal>
             <ImageWrapper>
-                <img src={`./images/Sentinel-class landing craft.png`} />
+            <img src={`./images/${productClicked.name}.png`} />
             </ImageWrapper>
 
             <DescriptionWrapper>
