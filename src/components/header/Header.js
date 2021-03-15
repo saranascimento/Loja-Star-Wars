@@ -99,8 +99,8 @@ const ImageWrapper = styled.div`
         height: 12em;
 
     ${mediaQueries('laptop')`
-       width: 27em;
-        height: 12em;
+      width: 14em;
+     height: 12em;
     `};
 
     ${mediaQueries('tablet')`

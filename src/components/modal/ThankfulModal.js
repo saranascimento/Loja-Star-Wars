@@ -25,13 +25,13 @@ const Container = styled.div`
     `};
 `;
 
-const Remove = styled.span`
+const CloseModal = styled.span`
        width: 35px;
     height: 35px;
     background-color: #b2afaa;
     position: absolute;
-    top: 18px;
-    right: 16px;
+    top: -40px;
+    right: -34px;
     border-radius: 50%;
     color: #292903eb;
     cursor: pointer;
@@ -140,13 +140,13 @@ const ThankfulModal = () => {
 
     return (
             <Container >
-                 <Remove 
+                 <CloseModal 
                     onClick={() => {
                         setThankfulModalIsOpen(false)
                         resetCart()
                     }}
                 >x
-                </Remove>
+                </CloseModal>
                 { theme.title  === 'yoda' ?
                      
                         <YodaImageWrapper>
