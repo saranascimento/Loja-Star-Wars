@@ -67,7 +67,7 @@ const CardWrapper = styled.div`
 const ImageWrapper = styled.div`
     width: 100%;
     height: 65%;
-    background-color: burlywood;
+    background-color: #060606;
 
     img {
         width: 100%;

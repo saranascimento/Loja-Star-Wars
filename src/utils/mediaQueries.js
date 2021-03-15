@@ -6,5 +6,5 @@ export const Viewports = {
 }
 
 export const mediaQueries = (key) => {
-  return (style) => `@media (max-width: ${Viewports[key]}px) { ${style} }`;
+  return (style) => `@media only screen and (max-width: ${Viewports[key]}px) { ${style} }`;
 }

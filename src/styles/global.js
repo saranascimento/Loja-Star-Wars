@@ -8,13 +8,14 @@ export default createGlobalStyle`
         margin: 0;
     }
 
+    html, body {
+        width: 100%;
+        height: 100%;
+    }
+
     body {
-        background: #e2eae7;
+        background: #060606;
         background: url("./images/store-bg.png");
-        background-repeat: no-repeat;
-        background-size: 100% 100%;
-        height: 100vh;
-        background-attachment: fixed;
         font-family: "Pathway Gothic One", sans-serif;
     }
 
@@ -22,7 +23,6 @@ export default createGlobalStyle`
     .App {
         background-color: ${({theme}) => theme.colors.backgroundColor};
         text-align: center;
-        background-attachment: fixed;
         padding-bottom: 50px;
         position: relative;
     }

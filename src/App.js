@@ -20,6 +20,7 @@ const ContentWrapper = styled.div`
     display: flex;
     max-width: 1200px;
     justify-content: center;
+    height:100%;
 
     ${mediaQueries("desktop")`
       width: 90vw;
