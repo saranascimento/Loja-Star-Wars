@@ -24,7 +24,7 @@ yarn install
 
 ## O que pratiquei nesse projeto:
 
-### Reactjs
+### JS (Reactjs)
 
 - Hooks:
   - useContext
