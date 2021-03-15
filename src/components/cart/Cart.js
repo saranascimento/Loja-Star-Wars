@@ -197,8 +197,9 @@ const Cart = () => {
                 <p>
                     Meu Carrinho </p>
             </CartTop>
-            <CartBody>
-                
+            <CartBody
+                style={{overflow: getTotalPrice() > 0 ? 'auto' : 'initial'}}
+            >
                 <TextWrapper><h1>{theme.text.cart}</h1></TextWrapper>
                 <ImageWrapper> 
                     <img src={theme.pictures.cart}/>
